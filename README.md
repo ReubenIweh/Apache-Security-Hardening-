@@ -13,15 +13,18 @@ You require some tool to examine HTTP Headers for some of the implementation ver
 2. Use online HTTP response header checker tool
 
 ## Table of content 
-- [Checking the Apache version](#checking the apache version)
-- [Remove Server Version Banner](#remove server version banner) 
-- [Security Hardening Directives](#security hardening directives)
-- [HTTP Request Methods](#http request methods)
-- [CORS Headers](cros headers)
-- [Configuring TLS for Apache](#configuring tls for apache)
-- [Configuring Mod Security](#configuring mod security)
-- [Performance and Request Controls](#performance and request controls)
-- [Enable Apache Logging](#enable apache logging)
+## Table of Contents
+
+- [Checking the Apache version](#checking-the-apache-version)
+- [Remove Server Version Banner](#remove-server-version-banner)
+- [Security Hardening Directives](#security-hardening-directives)
+- [HTTP Request Methods](#http-request-methods)
+- [CORS Headers](#cors-headers)
+- [Configuring TLS for Apache](#configuring-tls-for-apache)
+- [Configuring Mod Security](#configuring-mod-security)
+- [Performance and Request Controls](#performance-and-request-controls)
+- [Enable Apache Logging](#enable-apache-logging)
+
 
 ## checking the Apache version
 On Red Hat-based systems, which use yum or dnf, run the following commands to check the running version of apache
