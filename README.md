@@ -28,11 +28,14 @@ You require some tool to examine HTTP Headers for some of the implementation ver
 
 ## checking the Apache version
 On Red Hat-based systems, which use yum or dnf, run the following commands to check the running version of apache
-`httpd -v`
+
+- `httpd -v`
 
 ## Remove Server Version Banner
-Here you don’t want to expose what web server version you are using. Exposing version means you are helping hacker to speedy the reconnaissance 
+
+You don’t want to expose what web server version you are using. Exposing version means you are helping hacker to speedy the reconnaissance 
 The default configuration will expose Apache Version and OS type. To change that go to the web httpd config folder /etc/httpd/conf
+
 - Go to `/etc/httpd/conf` folder
 - Modify `httpd.conf file` 
 - Add the following directive and save the `httpd.conf`
@@ -50,7 +53,9 @@ Restricting access to sensitive directories is a critical security measure to pr
 # Denying Access to the Root Directory
 
 To apply a default-deny policy to all directories except explicitly allowed locations
+
 - Go to /etc/httpd/conf folder and edit the httpd.conf file and add
+  
 `<Directory />
     Require all denied
 </Directory>`
@@ -115,7 +120,7 @@ The configuration file is, typically located at `/etc/httpd/conf.d/ssl.conf`
 
 An example configuration for enabling HTTPS on Apache
 
-`<VirtualHost *:443>
+<VirtualHost *:443>
     ServerAdmin example@domain.com
     DocumentRoot /var/www/html
     ServerName www.example.com
@@ -129,7 +134,7 @@ An example configuration for enabling HTTPS on Apache
         
     </Directory>
 
-</VirtualHost>`
+</VirtualHost>
 
 - `SSLEngine on` enables SSL/TLS for the server.
 - `SSLCertificateFile` specifies the path to your SSL certificate.
@@ -141,6 +146,7 @@ An example configuration for enabling HTTPS on Apache
   Mod Security is an open-source web application firewall, which you can use with Apache. It provides Web Application Firewall functionality to filter malicious requests.
   
 - `dnf install mod_security`
+  
 - Enable it in Apache go to `httpd.conf file` and add
 
 LoadModule security2_module modules/mod_security2.so
@@ -150,7 +156,7 @@ IncludeOptional /etc/httpd/modsecurity.d/*.conf
 Helps block repeated requests from the same IP
 
 - dnf install mod_evasive
-- 
+  
 Example Config (/etc/httpd/conf.d/mod_evasive.conf):
 <IfModule mod_evasive20.c>
     DOSHashTableSize    3097
@@ -163,18 +169,19 @@ Example Config (/etc/httpd/conf.d/mod_evasive.conf):
 </IfModule>
 
 ## Disable Unnecessary Apache Modules
+
 Every loaded module increases the attack surface to do that 
 
-httpd -M
+- `httpd -M`
 
-vi /etc/httpd/conf.modules.d/*.conf
+- `vi /etc/httpd/conf.modules.d/*.conf`
 
 Common modules to consider disabling:
-# mod_autoindex (directory listings)
-# mod_info (exposes config details)
-# mod_status (shows server status to public)
-# mod_userdir (exposes user home dirs)
-# mod_cgi (if not using CGI)
+- mod_autoindex (directory listings)
+- mod_info (exposes config details)
+- mod_status (shows server status to public)
+- mod_userdir (exposes user home dirs)
+- mod_cgi (if not using CGI)
 
 ## Performance and Request Controls
 
@@ -183,31 +190,31 @@ edit the `httpd.conf` file and add the following settings
 KeepAlive On 
 KeepAliveTimeout 60
 
-# Purpose: Enables persistent connections. Improves performance for legitimate clients; timeout is slightly high.
+- Purpose: Enables persistent connections. Improves performance for legitimate clients; timeout is slightly high.
 
 LimitRequestBody 8096
 
-# Purpose: Limits the size of request bodies. Helps prevent DoS attacks via large payloads.
+- Purpose: Limits the size of request bodies. Helps prevent DoS attacks via large payloads.
 
 LimitRequestFields 200 
 LimitRequestFieldSize 28190 
 LimitRequestLine 4094
 
-# Purpose: Disables XML request bodies. Prevents XML bomb attacks like Billion Laughs.
+- Purpose: Disables XML request bodies. Prevents XML bomb attacks like Billion Laughs.
 
 LimitXMLRequestBody 0
 
-# Purpose: Controls concurrency and resource usage
+- Purpose: Controls concurrency and resource usage
 
 MaxKeepAliveRequests 500
 MaxRequestWorkers 50 
 TimeOut 300
 
-# Helps mitigate resource exhaustion from slow or excessive clients.
+- Helps mitigate resource exhaustion from slow or excessive clients.
 
 RequestReadTimeout header=0 body=0
 
-# Purpose: (Ineffective here) Sets read timeouts for headers and body. Importance: Meant to prevent slow HTTP attacks. But set to 0 = no timeout = security risk. Should be revised.
+- Purpose: (Ineffective here) Sets read timeouts for headers and body. Importance: Meant to prevent slow HTTP attacks. But set to 0 = no timeout = security risk. Should be revised.
 
 ## Enable Apache Logging
 
@@ -221,6 +228,6 @@ CustomLog logs/access_log combined
 - ErrorLog → logs all Apache errors
 - CustomLog → logs all HTTP requests (access logs)
 
-  # Make sure the Apache user can write to the log directory:
+- Make sure the Apache user can write to the log directory:
   
 sudo chown -R apache:apache /var/log/httpd
